@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>${footerData.about}</p>
             <div class="social-links">
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.instagram.com/zava_consultoria/" target="_blank" aria-label="Visite o perfil da ZAVA Consultoria no Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
             </div>
