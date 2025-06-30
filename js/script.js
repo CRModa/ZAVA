@@ -198,4 +198,28 @@ document.addEventListener('DOMContentLoaded', () => {
             contactForm.reset();
         });
     }
+
+    // Efeito de hover suave
+    const teamMember = document.querySelector('.team-member');
+        
+    teamMember.addEventListener('mouseenter', () => {
+        teamMember.style.transform = 'translateY(-10px)';
+        teamMember.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.15)';
+    });
+    
+    teamMember.addEventListener('mouseleave', () => {
+        teamMember.style.transform = 'translateY(0)';
+        teamMember.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+    });
+    
+    // Efeito para as tags de habilidades
+    document.querySelectorAll('.skill-tag').forEach(tag => {
+        tag.addEventListener('mouseenter', () => {
+            tag.style.transform = 'translateY(-3px)';
+        });
+        
+        tag.addEventListener('mouseleave', () => {
+            tag.style.transform = 'translateY(0)';
+        });
+    });
 });
