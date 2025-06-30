@@ -198,4 +198,16 @@ document.addEventListener('DOMContentLoaded', () => {
             contactForm.reset();
         });
     }
+    // Simples script para animações de hover
+        document.querySelectorAll('.team-member').forEach(member => {
+            member.addEventListener('mouseenter', () => {
+                member.style.transform = 'translateY(-10px)';
+                member.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.15)';
+            });
+            
+            member.addEventListener('mouseleave', () => {
+                member.style.transform = 'translateY(0)';
+                member.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+            });
+        });
 });
