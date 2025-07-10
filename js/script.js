@@ -222,4 +222,215 @@ document.addEventListener('DOMContentLoaded', () => {
             tag.style.transform = 'translateY(0)';
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Filtros da galeria
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryCards = document.querySelectorAll('.gallery-card');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Ativa o botão clicado
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const filter = button.dataset.filter;
+                
+                // Filtra os cards
+                galleryCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Lightbox
+        const viewButtons = document.querySelectorAll('.view-more');
+        const lightbox = document.querySelector('.lightbox');
+        const closeLightbox = document.querySelector('.close-lightbox');
+        const lightboxImg = document.querySelector('.lightbox-img');
+        const lightboxTitle = document.querySelector('.lightbox-title');
+        const lightboxDesc = document.querySelector('.lightbox-description');
+        const lightboxDate = document.querySelector('.lightbox-date');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const thumbnailsContainer = document.querySelector('.lightbox-thumbnails');
+        
+        // Dados da galeria (simulando um banco de dados)
+        const galleryData = [
+            {
+                title: "Workshop RH 2023",
+                date: "15 Março 2023",
+                description: "Workshop anual para profissionais de recursos humanos com participação de 120 empresas.",
+                images: [
+                    "../assets/zaida.jpg",
+                    "../assets/zaida.jpg",
+                    "../assets/zaida.jpg"
+                ],
+                category: "corporate"
+            },
+            {
+                title: "Capacitação em Gestão",
+                date: "22 Abril 2023",
+                description: "Treinamento intensivo para gestores com duração de 40 horas.",
+                images: [
+                    "../assets/zaida.jpg",
+                    "../assets/zaida.jpg"
+                ],
+                category: "training"
+            },
+            {
+                title: "Retiro Anual",
+                date: "10 Junho 2023",
+                description: "Nosso retiro anual de equipe na praia de Bilene.",
+                images: [
+                    "https://source.unsplash.com/random/800x600/?team1",
+                    "https://source.unsplash.com/random/800x600/?team2",
+                    "https://source.unsplash.com/random/800x600/?team3",
+                    "https://source.unsplash.com/random/800x600/?team4"
+                ],
+                category: "team"
+            },
+            {
+                title: "Conferência de Negócios",
+                date: "5 Agosto 2023",
+                description: "Participação como palestrantes na conferência anual de negócios.",
+                images: [
+                    "https://source.unsplash.com/random/800x600/?conference1",
+                    "https://source.unsplash.com/random/800x600/?conference2"
+                ],
+                category: "corporate"
+            },
+            // {
+            //     title: "Workshop Legal",
+            //     date: "12 Setembro 2023",
+            //     description: "Atualização sobre as novas leis trabalhistas em Moçambique.",
+            //     images: [
+            //         "https://source.unsplash.com/random/800x600/?workshop1",
+            //         "https://source.unsplash.com/random/800x600/?workshop2",
+            //         "https://source.unsplash.com/random/800x600/?workshop3"
+            //     ],
+            //     category: "training"
+            // },
+            // {
+            //     title: "Inauguração do Escritório",
+            //     date: "20 Outubro 2023",
+            //     description: "Celebração da inauguração do nosso novo espaço em Maputo.",
+            //     images: [
+            //         "https://source.unsplash.com/random/800x600/?office1",
+            //         "https://source.unsplash.com/random/800x600/?office2",
+            //         "https://source.unsplash.com/random/800x600/?office3",
+            //         "https://source.unsplash.com/random/800x600/?office4"
+            //     ],
+            //     category: "team"
+            // }
+        ];
+        
+        let currentEventIndex = 0;
+        let currentImageIndex = 0;
+        
+        // Abre o lightbox
+        viewButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                currentEventIndex = index;
+                currentImageIndex = 0;
+                updateLightbox();
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Fecha o lightbox
+        closeLightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Navegação entre imagens
+        prevBtn.addEventListener('click', () => {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
+            } else {
+                currentImageIndex = galleryData[currentEventIndex].images.length - 1;
+            }
+            updateLightboxImage();
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentImageIndex < galleryData[currentEventIndex].images.length - 1) {
+                currentImageIndex++;
+            } else {
+                currentImageIndex = 0;
+            }
+            updateLightboxImage();
+        });
+        
+        // Atualiza o lightbox com os dados do evento
+        function updateLightbox() {
+            const event = galleryData[currentEventIndex];
+            lightboxTitle.textContent = event.title;
+            lightboxDesc.textContent = event.description;
+            lightboxDate.textContent = event.date;
+            
+            // Carrega a primeira imagem
+            lightboxImg.src = event.images[0];
+            lightboxImg.alt = event.title;
+            
+            // Cria miniaturas
+            thumbnailsContainer.innerHTML = '';
+            event.images.forEach((img, idx) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.src = img;
+                thumbnail.alt = `${event.title} - Foto ${idx + 1}`;
+                if (idx === 0) thumbnail.classList.add('active');
+                
+                thumbnail.addEventListener('click', () => {
+                    currentImageIndex = idx;
+                    updateLightboxImage();
+                });
+                
+                thumbnailsContainer.appendChild(thumbnail);
+            });
+        }
+        
+        // Atualiza apenas a imagem exibida
+        function updateLightboxImage() {
+            const event = galleryData[currentEventIndex];
+            lightboxImg.src = event.images[currentImageIndex];
+            
+            // Atualiza a miniatura ativa
+            document.querySelectorAll('.lightbox-thumbnails img').forEach((img, idx) => {
+                if (idx === currentImageIndex) {
+                    img.classList.add('active');
+                } else {
+                    img.classList.remove('active');
+                }
+            });
+        }
+        
+        // Fecha o lightbox ao clicar fora do conteúdo
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Teclado navegação
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                } else if (e.key === 'ArrowLeft') {
+                    prevBtn.click();
+                } else if (e.key === 'ArrowRight') {
+                    nextBtn.click();
+                }
+            }
+        });
+    });
 });
