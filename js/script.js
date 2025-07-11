@@ -223,20 +223,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
+    // Código JavaScript para a galeria
+    // document.addEventListener('DOMContentLoaded', function() {
         // Filtros da galeria
         const filterButtons = document.querySelectorAll('.filter-btn');
         const galleryCards = document.querySelectorAll('.gallery-card');
         
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // Ativa o botão clicado
+                // Remove a classe active de todos os botões
                 filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Adiciona a classe active apenas ao botão clicado
                 button.classList.add('active');
                 
                 const filter = button.dataset.filter;
                 
-                // Filtra os cards
+                // Filtra os cards da galeria
                 galleryCards.forEach(card => {
                     if (filter === 'all' || card.dataset.category === filter) {
                         card.style.display = 'block';
@@ -259,16 +261,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const nextBtn = document.querySelector('.next-btn');
         const thumbnailsContainer = document.querySelector('.lightbox-thumbnails');
         
-        // Dados da galeria (simulando um banco de dados)
+        // Dados da galeria (pode ser substituído por dados dinâmicos se necessário)
         const galleryData = [
             {
                 title: "Workshop RH 2023",
                 date: "15 Março 2023",
                 description: "Workshop anual para profissionais de recursos humanos com participação de 120 empresas.",
                 images: [
-                    "../assets/zaida.jpg",
-                    "../assets/zaida.jpg",
-                    "../assets/zaida.jpg"
+                    "./assets/eventos/50 independecia.jpg",
+                    "./assets/eventos/cultura.jpg",
+                    "./assets/eventos/feira.jpg"
                 ],
                 category: "corporate"
             },
@@ -277,62 +279,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 date: "22 Abril 2023",
                 description: "Treinamento intensivo para gestores com duração de 40 horas.",
                 images: [
-                    "../assets/zaida.jpg",
-                    "../assets/zaida.jpg"
+                    "./assets/reconhecimento/reconhecimento.jpg",
+                    "./assets/reconhecimento/reconhecimento 2.jpg",
+                    "./assets/reconhecimento/um evento.jpg"
                 ],
                 category: "training"
-            },
-            {
-                title: "Retiro Anual",
-                date: "10 Junho 2023",
-                description: "Nosso retiro anual de equipe na praia de Bilene.",
-                images: [
-                    "https://source.unsplash.com/random/800x600/?team1",
-                    "https://source.unsplash.com/random/800x600/?team2",
-                    "https://source.unsplash.com/random/800x600/?team3",
-                    "https://source.unsplash.com/random/800x600/?team4"
-                ],
-                category: "team"
-            },
-            {
-                title: "Conferência de Negócios",
-                date: "5 Agosto 2023",
-                description: "Participação como palestrantes na conferência anual de negócios.",
-                images: [
-                    "https://source.unsplash.com/random/800x600/?conference1",
-                    "https://source.unsplash.com/random/800x600/?conference2"
-                ],
-                category: "corporate"
-            },
-            // {
-            //     title: "Workshop Legal",
-            //     date: "12 Setembro 2023",
-            //     description: "Atualização sobre as novas leis trabalhistas em Moçambique.",
-            //     images: [
-            //         "https://source.unsplash.com/random/800x600/?workshop1",
-            //         "https://source.unsplash.com/random/800x600/?workshop2",
-            //         "https://source.unsplash.com/random/800x600/?workshop3"
-            //     ],
-            //     category: "training"
-            // },
-            // {
-            //     title: "Inauguração do Escritório",
-            //     date: "20 Outubro 2023",
-            //     description: "Celebração da inauguração do nosso novo espaço em Maputo.",
-            //     images: [
-            //         "https://source.unsplash.com/random/800x600/?office1",
-            //         "https://source.unsplash.com/random/800x600/?office2",
-            //         "https://source.unsplash.com/random/800x600/?office3",
-            //         "https://source.unsplash.com/random/800x600/?office4"
-            //     ],
-            //     category: "team"
-            // }
+            }
         ];
         
         let currentEventIndex = 0;
         let currentImageIndex = 0;
         
-        // Abre o lightbox
+        // Abre o lightbox quando clicar em "Ver Fotos"
         viewButtons.forEach((button, index) => {
             button.addEventListener('click', () => {
                 currentEventIndex = index;
@@ -349,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = 'auto';
         });
         
-        // Navegação entre imagens
+        // Navegação entre imagens (anterior)
         prevBtn.addEventListener('click', () => {
             if (currentImageIndex > 0) {
                 currentImageIndex--;
@@ -359,6 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateLightboxImage();
         });
         
+        // Navegação entre imagens (próxima)
         nextBtn.addEventListener('click', () => {
             if (currentImageIndex < galleryData[currentEventIndex].images.length - 1) {
                 currentImageIndex++;
@@ -419,7 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Teclado navegação
+        // Navegação pelo teclado
         document.addEventListener('keydown', (e) => {
             if (lightbox.classList.contains('active')) {
                 if (e.key === 'Escape') {
@@ -432,5 +391,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-    });
+    // });
 });
